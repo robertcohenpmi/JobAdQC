@@ -45,7 +45,7 @@ with st.sidebar:
         if job_list:
             with open("job_adverts.json", "w", encoding="utf-8") as f:
                 json.dump(job_list, f, ensure_ascii=False, indent=4)
-            st.success(f"✅ Found {len(job_list)} job adverts.")
+            st.success(f"✅ Found {len(job_list)} currently published job adverts.")
 
             progress = st.progress(0, text="🧼 Cleaning HTML...")
             for i, job in enumerate(job_list):
@@ -111,12 +111,12 @@ if os.path.exists("job_adverts_issues.json"):
             })
             for issue in entry["issues"]:
                 issue_counts[issue] = issue_counts.get(issue, 0) + 1
-
     if issues_summary:
         df_issues = pd.DataFrame(issues_summary)
         st.dataframe(df_issues, use_container_width=True, hide_index=True)
 
         st.markdown("### 🧾 Job Quality Issues Summary Table")
+        st.markdown(f"**Total Issues Found:** {sum(issue_counts.values())}")  # 👈 New line added here
         df_summary = pd.DataFrame(list(issue_counts.items()), columns=["Issue Type", "Count"])
         df_summary = df_summary.sort_values("Count", ascending=False)
         st.dataframe(df_summary, use_container_width=True, hide_index=True)
@@ -124,6 +124,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
