@@ -89,8 +89,8 @@ if os.path.exists("job_adverts_issues.json"):
     for entry in issues_data:
         if entry["issues"]:
             ref = entry["reference_number"]
-            link = f"[{ref}](https://join.pmicareers.com/gb/en/job/{          issues_summary.append({
-                "Reference": link,
+            issues_summary.append({
+                "Reference": f"https://join.pmicareers.com/gb/en/job/{ref}",
                 "Title": entry["title"],
                 "Country": entry["country"],
                 "Language": entry["determined_language"],
@@ -101,10 +101,9 @@ if os.path.exists("job_adverts_issues.json"):
 
     if issues_summary:
         df_issues = pd.DataFrame(issues_summary)
-        st.markdown("### 🧾 Job Quality Issues Table")
-        st.markdown(df_issues.to_markdown(index=False), unsafe_allow_html=True)
+        st.dataframe(df_issues, use_container_width=True, hide_index=True)
 
-        st.markdown("### 📊 Job Quality Issues Summary Table")
+        st.markdown("### 🧾 Job Quality Issues Summary Table")
         df_summary = pd.DataFrame(list(issue_counts.items()), columns=["Issue Type", "Count"])
         df_summary = df_summary.sort_values("Count", ascending=False)
         st.dataframe(df_summary, use_container_width=True, hide_index=True)
