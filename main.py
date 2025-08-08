@@ -28,6 +28,7 @@ with col1:
   - Short descriptions
   - Non-inclusive language
   - Language mismatches
+  - Smoking terms
   
 **⚠️ Current Limitations:**
 - Only checks the English External Careers page.
@@ -114,7 +115,10 @@ with col3:
     if os.path.exists("job_adverts_issues.json"):
         with open("job_adverts_issues.json", "r", encoding="utf-8") as f:
             issues_data = json.load(f)
+
         issues_summary = []
+        issue_counts = {}
+
         for entry in issues_data:
             if entry["issues"]:
                 ref = entry["reference_number"]
@@ -125,9 +129,17 @@ with col3:
                     "Language": entry["determined_language"],
                     "Issues": "; ".join(entry["issues"])
                 })
+                for issue in entry["issues"]:
+                    issue_counts[issue] = issue_counts.get(issue, 0) + 1
+
         if issues_summary:
             df_issues = pd.DataFrame(issues_summary)
             st.dataframe(df_issues, use_container_width=True, hide_index=True)
+
+            st.markdown("### 🧾 Job Quality Issues Summary Table")
+            df_summary = pd.DataFrame(list(issue_counts.items()), columns=["Issue Type", "Count"])
+            df_summary = df_summary.sort_values("Count", ascending=False)
+            st.dataframe(df_summary, use_container_width=True, hide_index=True)
         else:
             st.info("ℹ️ No issues found.")
     else:
