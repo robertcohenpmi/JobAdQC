@@ -8,6 +8,9 @@ import json
 import os
 import pandas as pd
 from bs4 import BeautifulSoup
+from delete import delete_json_files
+
+delete_json_files()
 
 st.set_page_config(layout="wide")
 st.title("🌐 PMI External Careers Job Adverts – Quality Checker")
