@@ -86,7 +86,8 @@ with st.sidebar:
                 json.dump(quality_issues, f, ensure_ascii=False, indent=4)
             st.success("✅ Quality checks complete. Saved to job_adverts_issues.json.")
     st.markdown("""
-**🔍 About**
+**📙 About **
+
 This is a protoytpye tool which was created by Rob Cohen
 """)
 # Main column: Job Quality Issues
@@ -122,5 +123,6 @@ if os.path.exists("job_adverts_issues.json"):
     else:
         st.info("ℹ️ No issues found.")
 else:
-    st.info("ℹ️ Please run QC tool for results.")
+    st.info("ℹ️ Please run QC Check for results.")
+
 
