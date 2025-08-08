@@ -41,9 +41,9 @@ def run_quality_checks(job, detected_language):
         issues.append("Lack of punctuation in description")
 
     # Check for job type presence
-    job_type_keywords = ["full-time", "part-time", "contract", "freelance", "internship"]
-    if not any(term in plain_text.lower() for term in job_type_keywords):
-        issues.append("Job type not specified")
+    # job_type_keywords = ["full-time", "part-time", "contract", "freelance", "internship"]
+    # if not any(term in plain_text.lower() for term in job_type_keywords):
+    #    issues.append("Job type not specified")
 
     # Check for discriminatory language
     discriminatory_terms = ["young", "energetic", "native english speaker", "able-bodied"]
@@ -52,3 +52,4 @@ def run_quality_checks(job, detected_language):
             issues.append(f"Potentially discriminatory language: '{term}' found")
 
     return issues
+
