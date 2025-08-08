@@ -1,4 +1,3 @@
-# Entry point for the Streamlit app
 import streamlit as st
 from fetch import fetch_job_data
 from clean import clean_html
@@ -15,10 +14,8 @@ delete_json_files()
 st.set_page_config(layout="wide")
 st.title("🌐 PMI External Careers Job Adverts – Quality Checker")
 
-view_option = st.sidebar.radio("📊 Explore Job Data", ["None", "Jobs per Country", "Jobs per Language"])
-col1, col3 = st.columns([1, 1])
-
-with col1:
+# Moved Controls & Logs to sidebar
+with st.sidebar:
     st.subheader("⚙️ Controls & Logs")
     st.markdown("""
 **🔍 What does this tool do?**
@@ -29,7 +26,7 @@ with col1:
   - Non-inclusive language
   - Language mismatches
   - Smoking terms
-  
+
 **⚠️ Current Limitations:**
 - Only checks the English External Careers page.
 """)
@@ -80,36 +77,10 @@ with col1:
                 json.dump(quality_issues, f, ensure_ascii=False, indent=4)
             st.success("✅ Quality checks complete. Saved to job_adverts_issues.json.")
 
-if view_option == "Jobs per Country":
-    st.subheader("🌍 Jobs per Country")
-    if os.path.exists("job_adverts_cleaned.json"):
-        with open("job_adverts_cleaned.json", "r", encoding="utf-8") as f:
-            job_list = json.load(f)
-        country_counts = {}
-        for job in job_list:
-            country = job.get("country", "Unknown")
-            country_counts[country] = country_counts.get(country, 0) + 1
-        df_country = pd.DataFrame(list(country_counts.items()), columns=["Country", "Job Count"])
-        df_country = df_country.sort_values("Job Count", ascending=False)
-        st.dataframe(df_country, use_container_width=True, hide_index=True)
-    else:
-        st.info("ℹ️ No cleaned job data available. Please run the QC check first.")
+# Removed view_option and related conditional blocks
 
-elif view_option == "Jobs per Language":
-    st.subheader("🌐 Jobs per Language")
-    if os.path.exists("job_adverts_details.json"):
-        with open("job_adverts_details.json", "r", encoding="utf-8") as f:
-            lang_data = json.load(f)
-        lang_counts = {}
-        for entry in lang_data:
-            lang = entry.get("determined_language", "unknown")
-            lang_counts[lang] = lang_counts.get(lang, 0) + 1
-        df_lang = pd.DataFrame(list(lang_counts.items()), columns=["Language", "Job Count"])
-        df_lang = df_lang.sort_values("Job Count", ascending=False)
-        st.dataframe(df_lang, use_container_width=True, hide_index=True)
-    else:
-        st.info("ℹ️ No language data available. Please run the QC check first.")
-
+# Display Job Quality Issues
+col1, col3 = st.columns([1, 1])
 with col3:
     st.subheader("🚨 Job Quality Issues")
     if os.path.exists("job_adverts_issues.json"):
