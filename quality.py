@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import string
 
 def run_quality_checks(job, detected_language):
     issues = []
@@ -33,21 +34,21 @@ def run_quality_checks(job, detected_language):
     if expected_language and detected_language != expected_language:
         issues.append(f"Language mismatch: expected {expected_language}, got {detected_language}")
 
-    # Check for excessive punctuation    
-    if plain_text.count("!") > 3 or any(word.isupper() for word in plain_text.split() if len(word) > 4):
-    issues.append("Excessive emphasis (e.g., ALL CAPS or too many exclamation marks)")
+    # Check for punctuation issues
+    if plain_text.count("!") > 3:
+        issues.append("Excessive use of exclamation marks")
+    if not any(p in plain_text for p in ".!?"):
+        issues.append("Lack of punctuation in description")
 
-    # Check for Job Type
-    job_type_keywords = ["full-time", "part-time", "contract", "freelance", "intern", "inkompass"]
-        if not any(term in plain_text.lower() for term in job_type_keywords):
-            issues.append("Job type not specified")
+    # Check for job type presence
+    job_type_keywords = ["full-time", "part-time", "contract", "freelance", "internship"]
+    if not any(term in plain_text.lower() for term in job_type_keywords):
+        issues.append("Job type not specified")
 
-    # Check for discrimination
+    # Check for discriminatory language
     discriminatory_terms = ["young", "energetic", "native english speaker", "able-bodied"]
-        for term in discriminatory_terms:
-            if term.lower() in plain_text.lower():
-                issues.append(f"Potentially discriminatory language: '{term}' found")
-
+    for term in discriminatory_terms:
+        if term.lower() in plain_text.lower():
+            issues.append(f"Potentially discriminatory language: '{term}' found")
 
     return issues
-
