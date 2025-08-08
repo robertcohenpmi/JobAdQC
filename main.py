@@ -45,7 +45,7 @@ with st.sidebar:
         if job_list:
             with open("job_adverts.json", "w", encoding="utf-8") as f:
                 json.dump(job_list, f, ensure_ascii=False, indent=4)
-            st.success(f"✅ Saved {len(job_list)} job entries to job_adverts.json.")
+            st.success(f"✅ Found {len(job_list)} job adverts.")
 
             progress = st.progress(0, text="🧼 Cleaning HTML...")
             for i, job in enumerate(job_list):
@@ -55,7 +55,7 @@ with st.sidebar:
 
             with open("job_adverts_cleaned.json", "w", encoding="utf-8") as f:
                 json.dump(job_list, f, ensure_ascii=False, indent=4)
-            st.success("✅ Cleaned HTML and saved to job_adverts_cleaned.json.")
+            st.success("✅ Cleaned HTML.")
 
             language_details = []
             quality_issues = []
@@ -80,11 +80,11 @@ with st.sidebar:
 
             with open("job_adverts_details.json", "w", encoding="utf-8") as f:
                 json.dump(language_details, f, ensure_ascii=False, indent=4)
-            st.success("✅ Language detection complete. Saved to job_adverts_details.json.")
+            st.success("✅ Language detection complete.")
 
             with open("job_adverts_issues.json", "w", encoding="utf-8") as f:
                 json.dump(quality_issues, f, ensure_ascii=False, indent=4)
-            st.success("✅ Quality checks complete. Saved to job_adverts_issues.json.")
+            st.success("✅ Quality checks complete.")
     st.markdown("""
 **📙 About**
 
@@ -124,6 +124,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
