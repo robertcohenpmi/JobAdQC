@@ -12,12 +12,6 @@ from delete import delete_json_files
 delete_json_files()
 
 st.set_page_config(layout="wide")
-st.title("🌐 PMI External Careers Job Adverts – Quality Checker")
-
-# Sidebar: Controls & Logs
-with st.sidebar:
-    st.subheader("⚙️ Controls & Logs")
-    
 st.markdown("""
     <style>
         [data-testid="stSidebar"] {
@@ -27,6 +21,12 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
+st.title("🌐 PMI External Careers Job Adverts – Quality Checker")
+
+# Sidebar: Controls & Logs
+with st.sidebar:
+    st.subheader("⚙️ Controls & Logs")
+    st.markdown("""
 **🔍 What does this tool do?**
 - Performs real-time quality checks on job adverts via a direct connection to Phenom.
 - Checks include:
@@ -120,4 +120,3 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ No issues found or file missing.")
-
