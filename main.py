@@ -21,7 +21,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🌐 PMI External Careers Job Adverts – Quality Checker")
+st.title("🌐 External Careers Job Adverts – Quality Checker")
 
 # Sidebar: Controls & Logs
 with st.sidebar:
@@ -124,6 +124,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
