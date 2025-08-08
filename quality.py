@@ -33,4 +33,21 @@ def run_quality_checks(job, detected_language):
     if expected_language and detected_language != expected_language:
         issues.append(f"Language mismatch: expected {expected_language}, got {detected_language}")
 
+    # Check for excessive punctuation    
+    if plain_text.count("!") > 3 or any(word.isupper() for word in plain_text.split() if len(word) > 4):
+    issues.append("Excessive emphasis (e.g., ALL CAPS or too many exclamation marks)")
+
+    # Check for Job Type
+    job_type_keywords = ["full-time", "part-time", "contract", "freelance", "intern", "inkompass"]
+        if not any(term in plain_text.lower() for term in job_type_keywords):
+            issues.append("Job type not specified")
+
+    # Check for discrimination
+    discriminatory_terms = ["young", "energetic", "native english speaker", "able-bodied"]
+        for term in discriminatory_terms:
+            if term.lower() in plain_text.lower():
+                issues.append(f"Potentially discriminatory language: '{term}' found")
+
+
     return issues
+
