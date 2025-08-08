@@ -14,7 +14,7 @@ delete_json_files()
 st.set_page_config(layout="wide")
 st.title("🌐 PMI External Careers Job Adverts – Quality Checker")
 
-# Moved Controls & Logs to sidebar
+# Sidebar: Controls & Logs
 with st.sidebar:
     st.subheader("⚙️ Controls & Logs")
     st.markdown("""
@@ -77,41 +77,37 @@ with st.sidebar:
                 json.dump(quality_issues, f, ensure_ascii=False, indent=4)
             st.success("✅ Quality checks complete. Saved to job_adverts_issues.json.")
 
-# Removed view_option and related conditional blocks
+# Main column: Job Quality Issues
+st.subheader("🚨 Job Quality Issues")
+if os.path.exists("job_adverts_issues.json"):
+    with open("job_adverts_issues.json", "r", encoding="utf-8") as f:
+        issues_data = json.load(f)
 
-# Display Job Quality Issues
-col1, col3 = st.columns([1, 1])
-with col3:
-    st.subheader("🚨 Job Quality Issues")
-    if os.path.exists("job_adverts_issues.json"):
-        with open("job_adverts_issues.json", "r", encoding="utf-8") as f:
-            issues_data = json.load(f)
+    issues_summary = []
+    issue_counts = {}
 
-        issues_summary = []
-        issue_counts = {}
+    for entry in issues_data:
+        if entry["issues"]:
+            ref = entry["reference_number"]
+            issues_summary.append({
+                "Reference": f"https://join.pmicareers.com/gb/en/job/{ref}",
+                "Title": entry["title"],
+                "Country": entry["country"],
+                "Language": entry["determined_language"],
+                "Issues": "; ".join(entry["issues"])
+            })
+            for issue in entry["issues"]:
+                issue_counts[issue] = issue_counts.get(issue, 0) + 1
 
-        for entry in issues_data:
-            if entry["issues"]:
-                ref = entry["reference_number"]
-                issues_summary.append({
-                    "Reference": f"https://join.pmicareers.com/gb/en/job/{ref}",
-                    "Title": entry["title"],
-                    "Country": entry["country"],
-                    "Language": entry["determined_language"],
-                    "Issues": "; ".join(entry["issues"])
-                })
-                for issue in entry["issues"]:
-                    issue_counts[issue] = issue_counts.get(issue, 0) + 1
+    if issues_summary:
+        df_issues = pd.DataFrame(issues_summary)
+        st.dataframe(df_issues, use_container_width=True, hide_index=True)
 
-        if issues_summary:
-            df_issues = pd.DataFrame(issues_summary)
-            st.dataframe(df_issues, use_container_width=True, hide_index=True)
-
-            st.markdown("### 🧾 Job Quality Issues Summary Table")
-            df_summary = pd.DataFrame(list(issue_counts.items()), columns=["Issue Type", "Count"])
-            df_summary = df_summary.sort_values("Count", ascending=False)
-            st.dataframe(df_summary, use_container_width=True, hide_index=True)
-        else:
-            st.info("ℹ️ No issues found.")
+        st.markdown("### 🧾 Job Quality Issues Summary Table")
+        df_summary = pd.DataFrame(list(issue_counts.items()), columns=["Issue Type", "Count"])
+        df_summary = df_summary.sort_values("Count", ascending=False)
+        st.dataframe(df_summary, use_container_width=True, hide_index=True)
     else:
-        st.info("ℹ️ No issues found or file missing.")
+        st.info("ℹ️ No issues found.")
+else:
+    st.info("ℹ️ No issues found or file missing.")
