@@ -18,13 +18,13 @@ def run_quality_checks(job, detected_language):
         issues.append("Description too short (<500 characters)")
 
     # Check for non-inclusive language
-    gendered_terms = [" he ", " she ", " his ", " her ", "he/she", "his/her", "him/her", "chairman", "manpower"]
+    gendered_terms = [" he ", " she ", " his ", " her ", "he/she", "his/her", "him/her", "chairman", "manpower", "woman", " male ", " female "]
     for term in gendered_terms:
         if term.lower() in plain_text.lower():
             issues.append(f"Non-inclusive language: '{term}' found")
 
     # Check for tobacco-related terms
-    tobacco_terms = ["cigarette", "malboro", "smoking", "vape", "cancer"]
+    tobacco_terms = [" cigarette ", " malboro ", " smoking ", " vape ", " cancer "]
     for term in tobacco_terms:
         if term.lower() in plain_text.lower():
             issues.append(f"Tobacco-related term: '{term}' found")
@@ -46,11 +46,12 @@ def run_quality_checks(job, detected_language):
     #    issues.append("Job type not specified")
 
     # Check for discriminatory language
-    discriminatory_terms = ["young", "recent graduate", "native", "energetic", "youthful", "mature", "old", "aged", "perfect", "able-bodied", "fit", "healthy", "strong", "attractive", "well-groomed", "presentable", "good looking", "single", "unmarried", "children", "native", "aggressive", "dominant", "rockstar", "guru", "ninja", "fast-paced", "high energy"]
+    discriminatory_terms = [" young ", " recent graduate ", " native ", " energetic ", " youthful ", " mature ", " old ", " aged ", " perfect ", " able-bodied ", " fit ", " healthy ", " strong ", " attractive ", " well-groomed ", " presentable ", " good looking ", " single ", " unmarried ", " children ", " native ", " aggressive ", " dominant ", " rockstar ", " guru ", " ninja ", " fast-paced ", " high energy" ]
     for term in discriminatory_terms:
         if term.lower() in plain_text.lower():
-            issues.append(f"Potentially discriminatory language: '{term}' found")
+            issues.append(f"Potentially discriminatory language:'{term}'found")
 
     return issues
+
 
 
