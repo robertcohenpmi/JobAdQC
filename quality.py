@@ -46,12 +46,13 @@ def run_quality_checks(job, detected_language):
     #    issues.append("Job type not specified")
 
     # Check for discriminatory language
-    discriminatory_terms = [" young ", " recent graduate ", " native ", " energetic ", " youthful ", " mature ", " old ", " aged ", " perfect ", " able-bodied ", " fit ", " healthy ", " strong ", " attractive ", " well-groomed ", " presentable ", " good looking ", " single ", " unmarried ", " children ", " native ", " aggressive ", " dominant ", " rockstar ", " guru ", " ninja ", " fast-paced ", " high energy" ]
+    discriminatory_terms = [" young ", " recent graduate ", " native ", " energetic ", " youthful ", " mature ", " old ", " aged ", " perfect ", " able-bodied ", " healthy ", " attractive ", " well-groomed ", " presentable ", " good looking ", " unmarried ", " native ", " aggressive ", " dominant ", " rockstar ", " guru ", " ninja ", " fast-paced ", " high energy" ]
     for term in discriminatory_terms:
         if term.lower() in plain_text.lower():
             issues.append(f"Potentially discriminatory language:'{term}'found")
 
     return issues
+
 
 
 
