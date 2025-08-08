@@ -17,7 +17,16 @@ st.title("🌐 PMI External Careers Job Adverts – Quality Checker")
 # Sidebar: Controls & Logs
 with st.sidebar:
     st.subheader("⚙️ Controls & Logs")
-    st.markdown("""
+    
+st.markdown("""
+    <style>
+        [data-testid="stSidebar"] {
+            min-width: 350px;
+            max-width: 350px;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
 **🔍 What does this tool do?**
 - Performs real-time quality checks on job adverts via a direct connection to Phenom.
 - Checks include:
@@ -111,3 +120,4 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ No issues found or file missing.")
+
