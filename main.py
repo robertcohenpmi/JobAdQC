@@ -15,8 +15,8 @@ st.set_page_config(layout="wide")
 st.markdown("""
     <style>
         [data-testid="stSidebar"] {
-            min-width: 350px;
-            max-width: 350px;
+            min-width: 450px;
+            max-width: 450px;
         }
     </style>
     """, unsafe_allow_html=True)
@@ -25,7 +25,7 @@ st.title("🌐 PMI External Careers Job Adverts – Quality Checker")
 
 # Sidebar: Controls & Logs
 with st.sidebar:
-    st.subheader("⚙️ Controls & Logs")
+    st.subheader("⚙️ Running the QC Tool")
     st.markdown("""
 **🔍 What does this tool do?**
 - Performs real-time quality checks on job adverts via a direct connection to Phenom.
@@ -85,7 +85,10 @@ with st.sidebar:
             with open("job_adverts_issues.json", "w", encoding="utf-8") as f:
                 json.dump(quality_issues, f, ensure_ascii=False, indent=4)
             st.success("✅ Quality checks complete. Saved to job_adverts_issues.json.")
-
+    st.markdown("""
+**🔍 About**
+This is a protoytpye tool which was created by Rob Cohen
+""")
 # Main column: Job Quality Issues
 st.subheader("🚨 Job Quality Issues")
 if os.path.exists("job_adverts_issues.json"):
@@ -119,4 +122,5 @@ if os.path.exists("job_adverts_issues.json"):
     else:
         st.info("ℹ️ No issues found.")
 else:
-    st.info("ℹ️ No issues found or file missing.")
+    st.info("ℹ️ Please run QC tool for results.")
+
