@@ -25,8 +25,17 @@ with open("branding_styles.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Sidebar: Minimal info only
+
 with st.sidebar:
-    st.image("logo.svg", width=300)
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            <img src="logo.svg" width="300">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown(
         """
 # About this tool
@@ -201,6 +210,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
