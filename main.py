@@ -53,7 +53,7 @@ with col1:
 
     
     with c2:
-        check_language_mismatch = st.checkbox("Language mismatch", value=select_all or True)
+        check_language_mismatch = st.checkbox("Language mismatch", value=select_all)
         check_missing_fields = st.checkbox("Missing fields", value=select_all)
         check_punctuation = st.checkbox("Punctuation issues", value=select_all)
 
@@ -156,6 +156,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
