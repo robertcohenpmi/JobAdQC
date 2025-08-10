@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&amp;display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 /* Font override */
 html, body, [class*="css"] {
@@ -28,29 +28,3 @@ html, body, [class*="css"] {
     padding: 0.5em;
     border-radius: 4px;
 }
-
-/* Sidebar customization for desktop */
-@media (min-width: 768px) {
-    [data-testid="stSidebar"] {
-        width: 400px !important;
-        min-width: 400px !important;
-    }
-
-    [data-testid="stSidebar"] .css-1lcbmhc {
-        resize: none !important;
-    }
-}
-
-/* Sidebar customization for mobile */
-@media (max-width: 767px) {
-    [data-testid="stSidebar"] {
-        width: 100% !important;
-        min-width: 100% !important;
-    }
-
-    [data-testid="stSidebar"] .css-1lcbmhc {
-        resize: none !important;
-    }
-}
-
-
