@@ -35,12 +35,15 @@ html, body, [class*="css"] {
     min-width: 400px !important;
 }
 
-/* Hide the sidebar by default */
-[data-testid="stSidebar"][aria-expanded="true"] {
-    transform: translateX(-400px);
+
+/* Sidebar customization */
+[data-testid="stSidebar"] {
+    width: 400px !important;
+    min-width: 400px !important;
 }
 
 /* Prevent resizing */
 [data-testid="stSidebar"] .css-1lcbmhc {
     resize: none !important;
 }
+
