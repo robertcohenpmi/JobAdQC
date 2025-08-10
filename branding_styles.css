@@ -1,0 +1,42 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Lato', 'Calibri', sans-serif;
+    color: black;
+    background-color: #FFFFFF;
+}
+
+.sidebar .sidebar-content {
+    background-color: #71C5E8;
+}
+
+.reportview-container .main {
+    background-color: #FFFFFF;
+}
+
+.css-1d391kg {
+    background-color: #003DA5 !important;
+}
+
+.stButton>button {
+    background-color: #003DA5;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.stButton>button:hover {
+    background-color: #009CDE;
+    color: black;
+}
+
+.stTextInput>div>div>input {
+    color: black;
+    background-color: #FFFFFF;
+    border: 1px solid #003DA5;
+    padding: 0.5em;
+    border-radius: 4px;
+}
