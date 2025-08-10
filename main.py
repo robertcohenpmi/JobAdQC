@@ -13,8 +13,13 @@ from delete import delete_json_files
 delete_json_files()
 
 # Page setup
-st.set_page_config(layout="wide")
-st.title("🌐 External Careers Job Adverts – Quality Checker")
+
+st.set_page_config(
+    page_title="Job Advert QC Checker",
+    page_icon="🌐",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 # Sidebar: Minimal info only
 with st.sidebar:
@@ -156,6 +161,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
