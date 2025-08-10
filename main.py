@@ -16,9 +16,9 @@ delete_json_files()
 st.set_page_config(layout="wide")
 st.title("🌐 External Careers Job Adverts – Quality Checker")
 
-# Sidebar: Controls & Logs
+# Sidebar: Minimal info only
 with st.sidebar:
-    st.subheader("⚙️ Running the QC Tool")
+    st.subheader("ℹ️ About this tool")
     st.markdown("""
 **🔍 What does this tool do?**
 - Performs real-time quality checks on job adverts via a direct connection to Phenom.
@@ -28,17 +28,20 @@ with st.sidebar:
   - Non-inclusive language
   - Language mismatches
   - Smoking terms
-**⚠️ Current Limitations:**
+**⚠️ Limitations:**
 - Only checks the English External Careers page.
 """)
 
-    st.markdown("---")
+# Main layout: Two columns
+col1, col2 = st.columns([1.2, 1])
+
+with col1:
     st.markdown("### 🛠️ Quality Check Settings")
 
     # Select All toggle
     select_all = st.toggle("🔘 Select All Checks", value=False)
 
-    # Collapsible sections for grouped switches
+    # Grouped switches
     with st.expander("📄 Content & Structure Checks", expanded=True):
         check_missing_fields = st.checkbox("Missing fields", value=select_all or True)
         check_short_description = st.checkbox("Short description", value=select_all or True)
@@ -69,10 +72,11 @@ with st.sidebar:
     if check_discriminatory:
         selected_checks.append("Discriminatory language")
 
-    st.markdown("---")
-
     # Run button
-    if st.button("▶️ Run QC Check"):
+    run_check = st.button("▶️ Run QC Check")
+
+with col2:
+    if run_check:
         xml_url = "https://jobboards-ir.phenommarket.com/feeds/pmipmigb-en-gb-feed-generic"
         job_list = fetch_job_data(xml_url)
         if job_list:
@@ -119,8 +123,8 @@ with st.sidebar:
                 json.dump(quality_issues, f, ensure_ascii=False, indent=4)
             st.success("✅ Quality checks complete.")
 
-# Main column: Job Quality Issues
-st.subheader("🚨 Job Quality Issues")
+# Results section
+st.markdown("### 🚨 Job Quality Issues")
 if os.path.exists("job_adverts_issues.json"):
     with open("job_adverts_issues.json", "r", encoding="utf-8") as f:
         issues_data = json.load(f)
