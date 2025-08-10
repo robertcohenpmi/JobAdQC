@@ -32,22 +32,25 @@ with st.sidebar:
 - Only checks the English External Careers page.
 """)
 
-    # ✅ Section: Quality Check Toggles
     st.markdown("---")
     st.markdown("### 🛠️ Quality Check Settings")
 
-    # Visually distinct Select All toggle
-    st.markdown("**Toggle all checks on/off**")
-    select_all = st.toggle("🔘 Select All", value=False)
+    # Select All toggle
+    select_all = st.toggle("🔘 Select All Checks", value=False)
 
-    # Individual switches
-    check_missing_fields = st.checkbox("Missing fields", value=select_all or True)
-    check_short_description = st.checkbox("Short description", value=select_all or True)
-    check_non_inclusive = st.checkbox("Non-inclusive language", value=select_all or True)
-    check_tobacco_terms = st.checkbox("Tobacco-related terms", value=select_all)
-    check_language_mismatch = st.checkbox("Language mismatch", value=select_all or True)
-    check_punctuation = st.checkbox("Punctuation issues", value=select_all)
-    check_discriminatory = st.checkbox("Discriminatory language", value=select_all)
+    # Collapsible sections for grouped switches
+    with st.expander("📄 Content & Structure Checks", expanded=True):
+        check_missing_fields = st.checkbox("Missing fields", value=select_all or True)
+        check_short_description = st.checkbox("Short description", value=select_all or True)
+        check_punctuation = st.checkbox("Punctuation issues", value=select_all)
+
+    with st.expander("🗣️ Language & Inclusivity Checks", expanded=True):
+        check_non_inclusive = st.checkbox("Non-inclusive language", value=select_all or True)
+        check_discriminatory = st.checkbox("Discriminatory language", value=select_all)
+
+    with st.expander("🧯 Compliance Checks", expanded=True):
+        check_tobacco_terms = st.checkbox("Tobacco-related terms", value=select_all)
+        check_language_mismatch = st.checkbox("Language mismatch", value=select_all or True)
 
     # Build selected_checks list
     selected_checks = []
