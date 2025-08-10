@@ -21,48 +21,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-
-    html, body, [class*="css"]  {
-        font-family: 'Lato', 'Calibri', sans-serif;
-        color: black;
-    }
-
-    .reportview-container .main {
-        background-color: #FFFFFF;
-    }
-
-    .sidebar .sidebar-content {
-        background-color: #71C5E8;
-    }
-
-    .css-1d391kg {
-        background-color: #003DA5 !important;
-    }
-
-    .stButton>button {
-        background-color: #003DA5;
-        color: white;
-        border: none;
-        padding: 0.5em 1em;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .stButton>button:hover {
-        background-color: #009CDE;
-        color: black;
-    }
-
-
-    .stTextInput>div>div>input {
-        color: black;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
+with open("branding_styles.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Sidebar: Minimal info only
 with st.sidebar:
@@ -205,6 +165,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
