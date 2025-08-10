@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 /* Font override */
@@ -19,23 +20,6 @@ html, body, [class*="css"] {
     background-color: #009CDE;
     color: #003DA5;
 }
-
-
-    .qc-run-button button {
-        background-color: #009cde;
-        color: white;
-        font-weight: bold;
-        font-size: 1.2rem;
-        padding: 0.75em 2em;
-        border-radius: 10px;
-        width: 100%;
-        box-shadow: 0 0 12px rgba(0, 156, 222, 0.5);
-        transition: background-color 0.3s ease;
-    }
-    .qc-run-button button:hover {
-        background-color: #007bb5;
-    }
-
 
 /* Text input styling */
 .stTextInput>div>div>input {
