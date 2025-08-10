@@ -9,7 +9,10 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from delete import delete_json_files
 
+# Clear previous JSON files
 delete_json_files()
+
+# Page setup
 st.set_page_config(layout="wide")
 st.title("🌐 External Careers Job Adverts – Quality Checker")
 
@@ -29,26 +32,35 @@ with st.sidebar:
 - Only checks the English External Careers page.
 """)
 
-    # ✅ NEW: User-selectable QC criteria
-    selected_checks = st.multiselect(
-        "🛠️ Select Quality Checks to Run:",
-        [
-            "Missing fields",
-            "Short description",
-            "Non-inclusive language",
-            "Tobacco-related terms",
-            "Language mismatch",
-            "Punctuation issues",
-            "Discriminatory language"
-        ],
-        default=[
-            "Missing fields",
-            "Short description",
-            "Non-inclusive language",
-            "Language mismatch"
-        ]
-    )
+    st.markdown("### 🛠️ Toggle Quality Checks")
 
+    # ✅ Switches for each QC check
+    check_missing_fields = st.checkbox("Missing fields", value=True)
+    check_short_description = st.checkbox("Short description", value=True)
+    check_non_inclusive = st.checkbox("Non-inclusive language", value=True)
+    check_tobacco_terms = st.checkbox("Tobacco-related terms", value=False)
+    check_language_mismatch = st.checkbox("Language mismatch", value=True)
+    check_punctuation = st.checkbox("Punctuation issues", value=False)
+    check_discriminatory = st.checkbox("Discriminatory language", value=False)
+
+    # Build selected_checks list
+    selected_checks = []
+    if check_missing_fields:
+        selected_checks.append("Missing fields")
+    if check_short_description:
+        selected_checks.append("Short description")
+    if check_non_inclusive:
+        selected_checks.append("Non-inclusive language")
+    if check_tobacco_terms:
+        selected_checks.append("Tobacco-related terms")
+    if check_language_mismatch:
+        selected_checks.append("Language mismatch")
+    if check_punctuation:
+        selected_checks.append("Punctuation issues")
+    if check_discriminatory:
+        selected_checks.append("Discriminatory language")
+
+    # Run button
     if st.button("▶️ Run QC Check"):
         xml_url = "https://jobboards-ir.phenommarket.com/feeds/pmipmigb-en-gb-feed-generic"
         job_list = fetch_job_data(xml_url)
