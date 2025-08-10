@@ -33,9 +33,9 @@ with st.sidebar:
 ## What does this tool do?
 - Performs real-time quality checks on currently published job adverts via a direct connection to our external careers site.
 - Checks can include:
-  - length of advert (default)
   - Non inclusive or discriminatory language (default)
   - Tobacco and smoking terms (default)
+  - Advert length
   - Language identification
   - Punctuation issues
   - Missing critical fields
@@ -62,9 +62,6 @@ with col1:
     c1, c2 = st.columns(2)
 
     with c1:
-        check_short_description = st.checkbox(
-            "Short description", value=select_all or True
-        )
         check_non_inclusive = st.checkbox(
             "Non-inclusive language", value=select_all or True
         )
@@ -81,6 +78,7 @@ with col1:
         )
         check_missing_fields = st.checkbox("Missing fields", value=select_all)
         check_punctuation = st.checkbox("Punctuation issues", value=select_all)
+        check_short_description = st.checkbox("Short description", value=select_all)
 
     # Build selected_checks list
     selected_checks = []
@@ -203,6 +201,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
