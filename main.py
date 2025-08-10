@@ -96,8 +96,7 @@ with col2:
     if run_check:
         xml_url = "https://jobboards-ir.phenommarket.com/feeds/pmipmigb-en-gb-feed-generic"
         job_list = fetch_job_data(xml_url)
-
-            st.markdown("### Process:")
+        st.markdown("### Process:")
         
         if job_list:
             with open("job_adverts.json", "w", encoding="utf-8") as f:
@@ -174,6 +173,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
