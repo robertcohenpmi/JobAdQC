@@ -41,7 +41,7 @@ with st.sidebar:
 ## ⚠️ Limitations:
 - Only checks the English External Careers page.
 
-## Created By Rob Cohen
+## Created By [Rob Cohen](https://engage.cloud.microsoft/main/users/eyJfdHlwZSI6IlVzZXIiLCJpZCI6IjE0MTA0OTYxODQzMiJ9/storyline)
 """)
 
 # Main layout: Two columns
@@ -167,6 +167,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
