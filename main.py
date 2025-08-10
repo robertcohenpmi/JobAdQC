@@ -34,14 +34,17 @@ with st.sidebar:
 
     st.markdown("### 🛠️ Toggle Quality Checks")
 
-    # ✅ Switches for each QC check
-    check_missing_fields = st.checkbox("Missing fields", value=True)
-    check_short_description = st.checkbox("Short description", value=True)
-    check_non_inclusive = st.checkbox("Non-inclusive language", value=True)
-    check_tobacco_terms = st.checkbox("Tobacco-related terms", value=False)
-    check_language_mismatch = st.checkbox("Language mismatch", value=True)
-    check_punctuation = st.checkbox("Punctuation issues", value=False)
-    check_discriminatory = st.checkbox("Discriminatory language", value=False)
+    # Select All toggle
+    select_all = st.checkbox("Select all checks", value=False)
+
+    # Individual switches
+    check_missing_fields = st.checkbox("Missing fields", value=select_all or True)
+    check_short_description = st.checkbox("Short description", value=select_all or True)
+    check_non_inclusive = st.checkbox("Non-inclusive language", value=select_all or True)
+    check_tobacco_terms = st.checkbox("Tobacco-related terms", value=select_all)
+    check_language_mismatch = st.checkbox("Language mismatch", value=select_all or True)
+    check_punctuation = st.checkbox("Punctuation issues", value=select_all)
+    check_discriminatory = st.checkbox("Discriminatory language", value=select_all)
 
     # Build selected_checks list
     selected_checks = []
