@@ -97,12 +97,8 @@ with col1:
     if check_discriminatory:
         selected_checks.append("Discriminatory language")
 
-
-# Unique container for the button
-st.markdown('<div class="qc-run-button">', unsafe_allow_html=True)
-run_check = st.button("▶️ Run QC Check")
-st.markdown('</div>', unsafe_allow_html=True)
-
+    # Run button
+    run_check = st.button("▶️ Run QC Check")
 
 with col2:
     if run_check:
@@ -205,8 +201,6 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
-
-
 
 
 
