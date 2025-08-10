@@ -9,23 +9,16 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from delete import delete_json_files
 
+# Clear previous JSON files
 delete_json_files()
 
+# Page setup
 st.set_page_config(layout="wide")
-st.markdown("""
-    <style>
-        [data-testid="stSidebar"] {
-            min-width: 450px;
-            max-width: 450px;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-
 st.title("🌐 External Careers Job Adverts – Quality Checker")
 
-# Sidebar: Controls & Logs
+# Sidebar: Minimal info only
 with st.sidebar:
-    st.subheader("⚙️ Running the QC Tool")
+    st.subheader("ℹ️ About this tool")
     st.markdown("""
 **🔍 What does this tool do?**
 - Performs real-time quality checks on job adverts via a direct connection to Phenom.
@@ -35,11 +28,57 @@ with st.sidebar:
   - Non-inclusive language
   - Language mismatches
   - Smoking terms
-
-**⚠️ Current Limitations:**
+  
+**⚠️ Limitations:**
 - Only checks the English External Careers page.
 """)
-    if st.button("▶️ Run QC Check"):
+
+# Main layout: Two columns
+col1, col2 = st.columns([1.2, 1])
+
+with col1:
+    st.markdown("### 🛠️ Quality Check Settings")
+
+    # Select All toggle
+    select_all = st.toggle("🔘 Select All Checks", value=False)
+
+    # Compact layout using columns
+    c1, c2 = st.columns(2)
+
+    with c1:
+        check_short_description = st.checkbox("Short description", value=select_all or True)
+        check_non_inclusive = st.checkbox("Non-inclusive language", value=select_all or True)
+        check_tobacco_terms = st.checkbox("Tobacco-related terms", value=select_all or True)
+        check_discriminatory = st.checkbox("Discriminatory language", value=select_all or True)
+
+    
+    with c2:
+        check_language_mismatch = st.checkbox("Language mismatch", value=select_all)
+        check_missing_fields = st.checkbox("Missing fields", value=select_all)
+        check_punctuation = st.checkbox("Punctuation issues", value=select_all)
+
+    # Build selected_checks list
+    selected_checks = []
+    if check_missing_fields:
+        selected_checks.append("Missing fields")
+    if check_short_description:
+        selected_checks.append("Short description")
+    if check_non_inclusive:
+        selected_checks.append("Non-inclusive language")
+    if check_tobacco_terms:
+        selected_checks.append("Tobacco-related terms")
+    if check_language_mismatch:
+        selected_checks.append("Language mismatch")
+    if check_punctuation:
+        selected_checks.append("Punctuation issues")
+    if check_discriminatory:
+        selected_checks.append("Discriminatory language")
+
+    # Run button
+    run_check = st.button("▶️ Run QC Check")
+
+with col2:
+    if run_check:
         xml_url = "https://jobboards-ir.phenommarket.com/feeds/pmipmigb-en-gb-feed-generic"
         job_list = fetch_job_data(xml_url)
         if job_list:
@@ -67,7 +106,7 @@ with st.sidebar:
                     "reference_number": job.get("reference_number", ""),
                     "determined_language": lang_code
                 })
-                issues = run_quality_checks(job, lang_code)
+                issues = run_quality_checks(job, lang_code, selected_checks)
                 quality_issues.append({
                     "reference_number": job.get("reference_number", ""),
                     "title": job.get("title", ""),
@@ -85,20 +124,14 @@ with st.sidebar:
             with open("job_adverts_issues.json", "w", encoding="utf-8") as f:
                 json.dump(quality_issues, f, ensure_ascii=False, indent=4)
             st.success("✅ Quality checks complete.")
-    st.markdown("""
-**📙 About**
 
-This is a protoytpye tool which was created by Rob Cohen
-""")
-# Main column: Job Quality Issues
-st.subheader("🚨 Job Quality Issues")
+# Results section
+st.markdown("### 🚨 Job Quality Issues")
 if os.path.exists("job_adverts_issues.json"):
     with open("job_adverts_issues.json", "r", encoding="utf-8") as f:
         issues_data = json.load(f)
-
     issues_summary = []
     issue_counts = {}
-
     for entry in issues_data:
         if entry["issues"]:
             ref = entry["reference_number"]
@@ -114,9 +147,8 @@ if os.path.exists("job_adverts_issues.json"):
     if issues_summary:
         df_issues = pd.DataFrame(issues_summary)
         st.dataframe(df_issues, use_container_width=True, hide_index=True)
-
         st.markdown("### 🧾 Job Quality Issues Summary Table")
-        st.markdown(f"**Total Issues Found:** {sum(issue_counts.values())}")  # 👈 New line added here
+        st.markdown(f"**Total Issues Found:** {sum(issue_counts.values())}")
         df_summary = pd.DataFrame(list(issue_counts.items()), columns=["Issue Type", "Count"])
         df_summary = df_summary.sort_values("Count", ascending=False)
         st.dataframe(df_summary, use_container_width=True, hide_index=True)
@@ -124,8 +156,6 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
-
-
 
 
 
