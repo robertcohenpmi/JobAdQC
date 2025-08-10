@@ -28,6 +28,7 @@ with st.sidebar:
   - Non-inclusive language
   - Language mismatches
   - Smoking terms
+  
 **⚠️ Limitations:**
 - Only checks the English External Careers page.
 """)
@@ -154,3 +155,4 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
