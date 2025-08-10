@@ -193,7 +193,7 @@ if os.path.exists("job_adverts_issues.json"):
         df_issues = pd.DataFrame(issues_summary)
         st.dataframe(df_issues, use_container_width=True, hide_index=True)
         st.markdown("### 🧾 Job Quality Issues Summary Table")
-        st.markdown(f"**Total Advert Issues Found:** {sum(issue_counts.values())} of {len(job_list)} published adverts")
+        st.markdown(f"**{sum(issue_counts.values())}** adverts with issues from **{len(job_list)}** published adverts")
         df_summary = pd.DataFrame(
             list(issue_counts.items()), columns=["Issue Type", "Count"]
         )
@@ -203,4 +203,5 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
