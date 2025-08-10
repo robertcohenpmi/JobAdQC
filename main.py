@@ -44,7 +44,7 @@ st.markdown("""
 
     .stButton>button {
         background-color: #003DA5;
-        color: white;
+        color: 009CDE;
     }
 
     .stTextInput>div>div>input {
@@ -194,6 +194,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
