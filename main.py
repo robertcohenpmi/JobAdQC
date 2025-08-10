@@ -56,6 +56,7 @@ st.markdown("""
 
 # Sidebar: Minimal info only
 with st.sidebar:
+    st.image("logo.svg", width=300)
     st.subheader("ℹ️ About this tool")
     st.markdown("""
 **🔍 What does this tool do?**
@@ -194,6 +195,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
