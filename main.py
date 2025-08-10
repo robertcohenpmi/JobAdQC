@@ -29,8 +29,8 @@ with st.sidebar:
     st.image("logo.svg", width=300)
     st.markdown(
         """
-# ℹ️ About this tool
-## 🔍 What does this tool do?
+# About this tool
+## What does this tool do?
 - Performs real-time quality checks on currently published job adverts via a direct connection to our external careers site.
 - Checks can include:
   - length of advert (default)
@@ -40,7 +40,7 @@ with st.sidebar:
   - Punctuation issues
   - Missing critical fields
   
-## ⚠️ Limitations:
+## Limitations:
 - Only checks the Global Careers page.
 
 ## Created By [Rob Cohen](https://engage.cloud.microsoft/main/users/eyJfdHlwZSI6IlVzZXIiLCJpZCI6IjE0MTA0OTYxODQzMiJ9/storyline)
@@ -169,7 +169,7 @@ with col2:
             st.success("✅ Quality checks complete.")
 
 # Results section
-st.markdown("### 🚨 Job Quality Issues")
+st.markdown("### Job Quality Issues")
 if os.path.exists("job_adverts_issues.json"):
     with open("job_adverts_issues.json", "r", encoding="utf-8") as f:
         issues_data = json.load(f)
@@ -192,7 +192,7 @@ if os.path.exists("job_adverts_issues.json"):
     if issues_summary:
         df_issues = pd.DataFrame(issues_summary)
         st.dataframe(df_issues, use_container_width=True, hide_index=True)
-        st.markdown("### 🧾 Job Quality Issues Summary Table")
+        st.markdown("### Job Quality Issues Summary Table")
         st.markdown(f"**{sum(issue_counts.values())}** adverts with issues from **{len(job_list)}** published adverts")
         df_summary = pd.DataFrame(
             list(issue_counts.items()), columns=["Issue Type", "Count"]
@@ -203,5 +203,6 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
