@@ -154,7 +154,6 @@ with col2:
                         "issues": issues,
                     }
                 )
-               
                 progress.progress(
                     (i + 1) / len(job_list),
                     text=f"🔍 Processing... ({i + 1}/{len(job_list)})",
@@ -204,5 +203,3 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
-
-
