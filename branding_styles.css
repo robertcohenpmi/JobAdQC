@@ -29,21 +29,28 @@ html, body, [class*="css"] {
     border-radius: 4px;
 }
 
-/* Sidebar customization */
-[data-testid="stSidebar"] {
-    width: 400px !important;
-    min-width: 400px !important;
+/* Sidebar customization for desktop */
+@media (min-width: 768px) {
+    [data-testid="stSidebar"] {
+        width: 400px !important;
+        min-width: 400px !important;
+    }
+
+    [data-testid="stSidebar"] .css-1lcbmhc {
+        resize: none !important;
+    }
 }
 
+/* Sidebar customization for mobile */
+@media (max-width: 767px) {
+    [data-testid="stSidebar"] {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
 
-/* Sidebar customization */
-[data-testid="stSidebar"] {
-    width: 400px !important;
-    min-width: 400px !important;
+    [data-testid="stSidebar"] .css-1lcbmhc {
+        resize: none !important;
+    }
 }
 
-/* Prevent resizing */
-[data-testid="stSidebar"] .css-1lcbmhc {
-    resize: none !important;
-}
 
