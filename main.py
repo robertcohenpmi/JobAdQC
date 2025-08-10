@@ -49,10 +49,10 @@ with col1:
         check_missing_fields = st.checkbox("Missing fields", value=select_all or True)
         check_short_description = st.checkbox("Short description", value=select_all or True)
         check_non_inclusive = st.checkbox("Non-inclusive language", value=select_all or True)
-        check_tobacco_terms = st.checkbox("Tobacco-related terms", value=select_all)
+        check_language_mismatch = st.checkbox("Language mismatch", value=select_all or True)
 
     with c2:
-        check_language_mismatch = st.checkbox("Language mismatch", value=select_all or True)
+        check_tobacco_terms = st.checkbox("Tobacco-related terms", value=select_all)
         check_punctuation = st.checkbox("Punctuation issues", value=select_all)
         check_discriminatory = st.checkbox("Discriminatory language", value=select_all)
 
@@ -155,4 +155,5 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
