@@ -32,10 +32,13 @@ with st.sidebar:
 - Only checks the English External Careers page.
 """)
 
-    st.markdown("### 🛠️ Toggle Quality Checks")
+    # ✅ Section: Quality Check Toggles
+    st.markdown("---")
+    st.markdown("### 🛠️ Quality Check Settings")
 
-    # Select All toggle
-    select_all = st.checkbox("Select all checks", value=False)
+    # Visually distinct Select All toggle
+    st.markdown("**Toggle all checks on/off**")
+    select_all = st.toggle("🔘 Select All", value=False)
 
     # Individual switches
     check_missing_fields = st.checkbox("Missing fields", value=select_all or True)
@@ -62,6 +65,8 @@ with st.sidebar:
         selected_checks.append("Punctuation issues")
     if check_discriminatory:
         selected_checks.append("Discriminatory language")
+
+    st.markdown("---")
 
     # Run button
     if st.button("▶️ Run QC Check"):
