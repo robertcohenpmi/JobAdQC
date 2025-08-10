@@ -41,19 +41,19 @@ with col1:
     # Select All toggle
     select_all = st.toggle("🔘 Select All Checks", value=False)
 
-    # Grouped switches
-    with st.expander("📄 Content & Structure Checks", expanded=True):
+    # Compact layout using columns
+    c1, c2 = st.columns(2)
+
+    with c1:
         check_missing_fields = st.checkbox("Missing fields", value=select_all or True)
         check_short_description = st.checkbox("Short description", value=select_all or True)
-        check_punctuation = st.checkbox("Punctuation issues", value=select_all)
-
-    with st.expander("🗣️ Language & Inclusivity Checks", expanded=True):
         check_non_inclusive = st.checkbox("Non-inclusive language", value=select_all or True)
-        check_discriminatory = st.checkbox("Discriminatory language", value=select_all)
-
-    with st.expander("🧯 Compliance Checks", expanded=True):
         check_tobacco_terms = st.checkbox("Tobacco-related terms", value=select_all)
+
+    with c2:
         check_language_mismatch = st.checkbox("Language mismatch", value=select_all or True)
+        check_punctuation = st.checkbox("Punctuation issues", value=select_all)
+        check_discriminatory = st.checkbox("Discriminatory language", value=select_all)
 
     # Build selected_checks list
     selected_checks = []
