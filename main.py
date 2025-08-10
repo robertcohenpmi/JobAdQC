@@ -154,19 +154,7 @@ with col2:
                         "issues": issues,
                     }
                 )
-
-    # Convert back to JSON string
-    json_str = json.dumps(issues_data, ensure_ascii=False, indent=2)
-
-    # Create download button
-    st.download_button(
-        label="📥 Download Raw JSON",
-        data=json_str,
-        file_name="job_adverts_issues.json",
-        mime="application/json"
-    )
-
-                
+               
                 progress.progress(
                     (i + 1) / len(job_list),
                     text=f"🔍 Processing... ({i + 1}/{len(job_list)})",
@@ -216,4 +204,5 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
