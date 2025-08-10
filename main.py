@@ -30,16 +30,17 @@ with st.sidebar:
     st.markdown("""
 # ℹ️ About this tool
 ## 🔍 What does this tool do?
-- Performs real-time quality checks on job adverts via a direct connection to Phenom.
-- Checks include:
-  - Missing fields
-  - Short descriptions
-  - Non-inclusive language
-  - Language mismatches
-  - Smoking terms
+- Performs real-time quality checks on currently published job adverts via a direct connection to our external careers site.
+- Checks can include:
+  - length of advert (default)
+  - Non inclusive or discriminatory language (default)
+  - Tobacco and smoking terms (default)
+  - Language identification
+  - Punctuation issues
+  - Missing critical fields
   
 ## ⚠️ Limitations:
-- Only checks the English External Careers page.
+- Only checks the Global Careers page.
 
 ## Created By [Rob Cohen](https://engage.cloud.microsoft/main/users/eyJfdHlwZSI6IlVzZXIiLCJpZCI6IjE0MTA0OTYxODQzMiJ9/storyline)
 """)
@@ -48,7 +49,7 @@ with st.sidebar:
 col1, col2 = st.columns([1.2, 1])
 
 with col1:
-    st.markdown("###Select Quality Checks")
+    st.markdown("### Select Quality Checks")
 
     # Select All toggle
     select_all = st.toggle("Select All Checks", value=False)
@@ -59,8 +60,9 @@ with col1:
     with c1:
         check_short_description = st.checkbox("Short description", value=select_all or True)
         check_non_inclusive = st.checkbox("Non-inclusive language", value=select_all or True)
-        check_tobacco_terms = st.checkbox("Tobacco-related terms", value=select_all or True)
         check_discriminatory = st.checkbox("Discriminatory language", value=select_all or True)
+        check_tobacco_terms = st.checkbox("Tobacco-related terms", value=select_all or True)
+
 
     
     with c2:
@@ -167,6 +169,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
