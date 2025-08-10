@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&amp;display=swap');
 
 /* Font override */
 html, body, [class*="css"] {
@@ -28,4 +27,20 @@ html, body, [class*="css"] {
     border: 1px solid #003DA5;
     padding: 0.5em;
     border-radius: 4px;
+}
+
+/* Sidebar customization */
+[data-testid="stSidebar"] {
+    width: 400px !important;
+    min-width: 400px !important;
+}
+
+/* Hide the sidebar by default */
+[data-testid="stSidebar"][aria-expanded="true"] {
+    transform: translateX(-400px);
+}
+
+/* Prevent resizing */
+[data-testid="stSidebar"] .css-1lcbmhc {
+    resize: none !important;
 }
