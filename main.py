@@ -16,9 +16,9 @@ delete_json_files()
 
 st.set_page_config(
     page_title="Job Advert QC Checker",
-    page_icon="🌐",
+    page_icon="🎯",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 with open("branding_styles.css") as f:
@@ -27,44 +27,58 @@ with open("branding_styles.css") as f:
 # Sidebar: Minimal info only
 with st.sidebar:
     st.image("logo.svg", width=300)
-    st.subheader("ℹ️ About this tool")
-    st.markdown("""
-**🔍 What does this tool do?**
-- Performs real-time quality checks on job adverts via a direct connection to Phenom.
-- Checks include:
-  - Missing fields
-  - Short descriptions
-  - Non-inclusive language
-  - Language mismatches
-  - Smoking terms
+    st.markdown(
+        """
+# About this tool
+## What does this tool do?
+- Performs real-time quality checks on currently published job adverts via a direct connection to our external careers site.
+- Checks can include:
+  - Non inclusive or discriminatory language (default)
+  - Tobacco and smoking terms (default)
+  - Advert length
+  - Language identification
+  - Punctuation issues
+  - Missing critical fields
   
-**⚠️ Limitations:**
-- Only checks the English External Careers page.
-""")
+## Limitations:
+- Only checks the Global Careers page.
+
+## Created By [Rob Cohen](https://engage.cloud.microsoft/main/users/eyJfdHlwZSI6IlVzZXIiLCJpZCI6IjE0MTA0OTYxODQzMiJ9/storyline)
+
+Version 1.0 - Rel 10-Aug-2025
+"""
+    )
 
 # Main layout: Two columns
 col1, col2 = st.columns([1.2, 1])
 
 with col1:
-    st.markdown("### 🛠️ Quality Check Settings")
+    st.markdown("### Select Quality Checks:")
 
     # Select All toggle
-    select_all = st.toggle("🔘 Select All Checks", value=False)
+    select_all = st.toggle("Select All Checks", value=False)
 
     # Compact layout using columns
     c1, c2 = st.columns(2)
 
     with c1:
-        check_short_description = st.checkbox("Short description", value=select_all or True)
-        check_non_inclusive = st.checkbox("Non-inclusive language", value=select_all or True)
-        check_tobacco_terms = st.checkbox("Tobacco-related terms", value=select_all or True)
-        check_discriminatory = st.checkbox("Discriminatory language", value=select_all or True)
+        check_non_inclusive = st.checkbox(
+            "Non-inclusive language", value=select_all or True
+        )
+        check_discriminatory = st.checkbox(
+            "Discriminatory language", value=select_all or True
+        )
+        check_tobacco_terms = st.checkbox(
+            "Tobacco-related terms", value=select_all or True
+        )
 
-    
     with c2:
-        check_language_mismatch = st.checkbox("Language mismatch", value=select_all)
+        check_language_mismatch = st.checkbox(
+            "Language mismatch", value=select_all
+        )
         check_missing_fields = st.checkbox("Missing fields", value=select_all)
         check_punctuation = st.checkbox("Punctuation issues", value=select_all)
+        check_short_description = st.checkbox("Short description", value=select_all)
 
     # Build selected_checks list
     selected_checks = []
@@ -90,15 +104,22 @@ with col2:
     if run_check:
         xml_url = "https://jobboards-ir.phenommarket.com/feeds/pmipmigb-en-gb-feed-generic"
         job_list = fetch_job_data(xml_url)
+        st.markdown("### Process:")
+
         if job_list:
             with open("job_adverts.json", "w", encoding="utf-8") as f:
                 json.dump(job_list, f, ensure_ascii=False, indent=4)
-            st.success(f"✅ Found {len(job_list)} currently published job adverts.")
+            st.success(
+                f"✅ Found {len(job_list)} currently published job adverts."
+            )
 
             progress = st.progress(0, text="🧼 Cleaning HTML...")
             for i, job in enumerate(job_list):
                 job["description_html"] = clean_html(job["description_html"])
-                progress.progress((i + 1) / len(job_list), text=f"🧼 Cleaning HTML... ({i + 1}/{len(job_list)})")
+                progress.progress(
+                    (i + 1) / len(job_list),
+                    text=f"🧼 Cleaning HTML... ({i + 1}/{len(job_list)})",
+                )
             progress.empty()
 
             with open("job_adverts_cleaned.json", "w", encoding="utf-8") as f:
@@ -107,23 +128,34 @@ with col2:
 
             language_details = []
             quality_issues = []
-            progress = st.progress(0, text="🔍 Detecting language and checking quality...")
+            progress = st.progress(
+                0, text="🔍 Detecting language and checking quality..."
+            )
             for i, job in enumerate(job_list):
-                plain_text = BeautifulSoup(job["description_html"], "html.parser").get_text()
+                plain_text = BeautifulSoup(
+                    job["description_html"], "html.parser"
+                ).get_text()
                 lang_code = detect_language(plain_text)
-                language_details.append({
-                    "reference_number": job.get("reference_number", ""),
-                    "determined_language": lang_code
-                })
+                language_details.append(
+                    {
+                        "reference_number": job.get("reference_number", ""),
+                        "determined_language": lang_code,
+                    }
+                )
                 issues = run_quality_checks(job, lang_code, selected_checks)
-                quality_issues.append({
-                    "reference_number": job.get("reference_number", ""),
-                    "title": job.get("title", ""),
-                    "country": job.get("country", ""),
-                    "determined_language": lang_code,
-                    "issues": issues
-                })
-                progress.progress((i + 1) / len(job_list), text=f"🔍 Processing... ({i + 1}/{len(job_list)})")
+                quality_issues.append(
+                    {
+                        "reference_number": job.get("reference_number", ""),
+                        "title": job.get("title", ""),
+                        "country": job.get("country", ""),
+                        "determined_language": lang_code,
+                        "issues": issues,
+                    }
+                )
+                progress.progress(
+                    (i + 1) / len(job_list),
+                    text=f"🔍 Processing... ({i + 1}/{len(job_list)})",
+                )
             progress.empty()
 
             with open("job_adverts_details.json", "w", encoding="utf-8") as f:
@@ -135,7 +167,7 @@ with col2:
             st.success("✅ Quality checks complete.")
 
 # Results section
-st.markdown("### 🚨 Job Quality Issues")
+st.markdown("### Job Quality Issues")
 if os.path.exists("job_adverts_issues.json"):
     with open("job_adverts_issues.json", "r", encoding="utf-8") as f:
         issues_data = json.load(f)
@@ -144,34 +176,31 @@ if os.path.exists("job_adverts_issues.json"):
     for entry in issues_data:
         if entry["issues"]:
             ref = entry["reference_number"]
-            issues_summary.append({
-                "Reference": f"https://join.pmicareers.com/gb/en/job/{ref}",
-                "Title": entry["title"],
-                "Country": entry["country"],
-                "Language": entry["determined_language"],
-                "Issues": "; ".join(entry["issues"])
-            })
+            issues_summary.append(
+                {
+                    "Reference": f"https://join.pmicareers.com/gb/en/job/{ref}",
+                    "Title": entry["title"],
+                    "Country": entry["country"],
+                    "Language": entry["determined_language"],
+                    "Issues": "; ".join(entry["issues"]),
+                }
+            )
             for issue in entry["issues"]:
                 issue_counts[issue] = issue_counts.get(issue, 0) + 1
     if issues_summary:
         df_issues = pd.DataFrame(issues_summary)
         st.dataframe(df_issues, use_container_width=True, hide_index=True)
-        st.markdown("### 🧾 Job Quality Issues Summary Table")
-        st.markdown(f"**Total Issues Found:** {sum(issue_counts.values())}")
-        df_summary = pd.DataFrame(list(issue_counts.items()), columns=["Issue Type", "Count"])
+        st.markdown("### Job Quality Issues Summary Table")
+        st.markdown(f"**{sum(issue_counts.values())}** adverts with issues from **{len(job_list)}** published adverts")
+        df_summary = pd.DataFrame(
+            list(issue_counts.items()), columns=["Issue Type", "Count"]
+        )
         df_summary = df_summary.sort_values("Count", ascending=False)
         st.dataframe(df_summary, use_container_width=True, hide_index=True)
     else:
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
-
-
-
-
-
-
-
 
 
 

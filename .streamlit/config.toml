@@ -1,0 +1,7 @@
+[theme]
+base = "dark"
+primaryColor = "#009cde"
+backgroundColor = "#FFFFFF"  # Matches your body background
+secondaryBackgroundColor = "#71C5E8"  # Sidebar background
+textColor = "#000000"  # Black text
+font = "sans serif"  # Closest match to Lato
