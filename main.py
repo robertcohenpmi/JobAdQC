@@ -39,29 +39,6 @@ with st.sidebar:
 **⚠️ Current Limitations:**
 - Only checks the English External Careers page.
 """)
-
-st.markdown("### 🛠️ Select Quality Checks")
-selected_checks = st.multiselect(
-    "Choose which checks to run:",
-    [
-        "Missing fields",
-        "Short description",
-        "Non-inclusive language",
-        "Tobacco-related terms",
-        "Language mismatch",
-        "Punctuation issues",
-        "Discriminatory language"
-    ],
-    default=[
-        "Missing fields",
-        "Short description",
-        "Non-inclusive language",
-        "Language mismatch"
-    ]
-)
-
-
-    
     if st.button("▶️ Run QC Check"):
         xml_url = "https://jobboards-ir.phenommarket.com/feeds/pmipmigb-en-gb-feed-generic"
         job_list = fetch_job_data(xml_url)
@@ -90,8 +67,7 @@ selected_checks = st.multiselect(
                     "reference_number": job.get("reference_number", ""),
                     "determined_language": lang_code
                 })
-
-issues = run_quality_checks(job, lang_code, selected_checks)
+                issues = run_quality_checks(job, lang_code)
                 quality_issues.append({
                     "reference_number": job.get("reference_number", ""),
                     "title": job.get("title", ""),
@@ -148,7 +124,6 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
-
 
 
 
