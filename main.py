@@ -28,8 +28,8 @@ with open("branding_styles.css") as f:
 with st.sidebar:
     st.image("logo.svg", width=300)
     st.markdown("""
-#ℹ️ About this tool
-##🔍 What does this tool do?
+# ℹ️ About this tool
+## 🔍 What does this tool do?
 - Performs real-time quality checks on job adverts via a direct connection to Phenom.
 - Checks include:
   - Missing fields
@@ -38,10 +38,10 @@ with st.sidebar:
   - Language mismatches
   - Smoking terms
   
-##⚠️ Limitations:
+## ⚠️ Limitations:
 - Only checks the English External Careers page.
 
-##Created By Rob Cohen
+## Created By Rob Cohen
 """)
 
 # Main layout: Two columns
@@ -167,6 +167,7 @@ if os.path.exists("job_adverts_issues.json"):
         st.info("ℹ️ No issues found.")
 else:
     st.info("ℹ️ Please run QC Check for results.")
+
 
 
 
